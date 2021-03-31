@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+ import io from 'socket.io-client';
 
 function App() {
   return <div className="App">App</div>;
