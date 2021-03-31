@@ -4,17 +4,32 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
 });
+
+app.use(express.json());
 
 const rooms = new Map();
 
-app.get('/rooms', (req, res) => { 
+app.get('/rooms', (req, res) => {
   res.json(rooms);
 });
 
+app.post('/rooms', (req, res) => {
+  const { roomID, username } = req.body;
+  if (!rooms.has(roomID)) {
+    rooms.set(
+      roomID,
+      new Map([
+        ['users', new Map()],
+        ['messages', []],
+      ]),
+    );
+  }
+  res.send();
+});
 
 io.on('connection', (socket) => {
   console.log('socket connected', socket.id);

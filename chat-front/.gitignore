@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/chat-back/node_modules
 /.pnp
 .pnp.js
 
