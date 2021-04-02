@@ -23,7 +23,8 @@ function App() {
     });
     socket.emit('ROOM:JOIN', obj);
     const { data } = await axios.get(`/rooms/${obj.roomID}`);
-    console.log(data);
+    dispatch({ type: SET_USERS, payload: data.users });
+
   };
 
   React.useEffect(() => {

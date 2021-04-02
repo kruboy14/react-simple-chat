@@ -18,12 +18,16 @@ function Chat({ users, messages }) {
       </div>
       <div className="chat-messages">
         <div className="messages">
-          <div className="message">
-            <p>fsafds</p>
-          </div>
-          <div className="message">
-            <p>fsafds</p>
-          </div>
+         {
+           messages.map(message => {
+             <div className="message">
+               <p>{message.text}</p>
+               <div>
+                 <span>{message.username}</span>
+               </div>
+             </div>
+           })
+         }
         </div>
         <form>
           <textarea
