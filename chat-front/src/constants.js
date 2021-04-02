@@ -1,3 +1,4 @@
 export const JOINED = 'JOINED';
 export const SET_USERS = 'SET_USERS';
-export const SET_MESSAGES = 'SET_MESSAGES';
+export const NEW_MESSAGE = 'NEW_MESSAGE';
+export const SET_DATA = 'SET_DATA';

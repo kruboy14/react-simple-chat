@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import socket from './socket';
 import JoinBlock from './components/JoinBlock';
-import { JOINED, SET_USERS } from './constants';
+import { JOINED, NEW_MESSAGE, SET_DATA, SET_USERS } from './constants';
 import reducer from './reducer';
 import Chat from './components/Chat';
 
@@ -23,8 +23,11 @@ function App() {
     });
     socket.emit('ROOM:JOIN', obj);
     const { data } = await axios.get(`/rooms/${obj.roomID}`);
-    dispatch({ type: SET_USERS, payload: data.users });
+    dispatch({ type: SET_DATA, payload: data });
+  };
 
+  const addMessage = (message) => {
+    dispatch({ type: NEW_MESSAGE, payload:message });
   };
 
   React.useEffect(() => {
@@ -32,11 +35,12 @@ function App() {
       dispatch({ type: SET_USERS, payload: users });
     };
     socket.on('ROOM:SET_USERS', setUsers);
+    socket.on('ROOM:NEW_MESSAGE', addMessage);
   }, []);
 
   return (
     <div className="wrapper">
-      {!state.joined ? <JoinBlock onLogin={onLogin} /> : <Chat {...state} />}
+      {!state.joined ? <JoinBlock onLogin={onLogin} /> : <Chat {...state} onAddMessage={addMessage} />}
     </div>
   );
 }

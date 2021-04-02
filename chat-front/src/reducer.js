@@ -1,4 +1,4 @@
-import { JOINED, SET_USERS, SET_MESSAGES } from './constants';
+import { JOINED, SET_USERS, NEW_MESSAGE, SET_DATA } from './constants';
 
 export default function reducer(state, action) {
   switch (action.type) {
@@ -14,10 +14,18 @@ export default function reducer(state, action) {
         ...state,
         users: action.payload,
       };
-    case SET_MESSAGES:
+
+      case SET_DATA:
       return {
         ...state,
-        messages: action.payload,
+        users: action.payload.users,
+        messages: action.payload.messages
+      };
+
+    case NEW_MESSAGE:
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
       };
 
     default:

@@ -13,15 +13,17 @@ app.use(express.json());
 
 const rooms = new Map();
 
-app.get('/rooms/:id',  (req, res) => {
-  const {id: roomID} = req.params;
-  const obj = rooms.has(roomID) ? {
-    users: [...rooms.get(roomID).get('users').values()],
-    messages: [...rooms.get(roomID).get('messages').values()],
-  } : {
-    users: [],
-    messages: [],
-  }
+app.get('/rooms/:id', (req, res) => {
+  const { id: roomID } = req.params;
+  const obj = rooms.has(roomID)
+    ? {
+        users: [...rooms.get(roomID).get('users').values()],
+        messages: [...rooms.get(roomID).get('messages').values()],
+      }
+    : {
+        users: [],
+        messages: [],
+      };
   res.json(obj);
 });
 
@@ -45,6 +47,12 @@ io.on('connection', (socket) => {
     rooms.get(roomID).get('users').set(socket.id, username);
     const users = [...rooms.get(roomID).get('users').values()];
     socket.to(roomID).emit('ROOM:SET_USERS', users);
+  });
+
+  socket.on('ROOM:NEW_MESSAGE', ({ roomID, username, text }) => {
+    const obj = { username, text };
+    rooms.get(roomID).get('messages').push(obj);
+    socket.to(roomID).emit('ROOM:NEW_MESSAGE', obj);
   });
 
   socket.on('disconnect', () => {
