@@ -24,8 +24,12 @@ app.get('/rooms/:id', (req, res) => {
         users: [],
         messages: [],
       };
-  res.json(obj);
+  res.json(obj);  
 });
+
+app.get('/', (req, res) => {
+  res.send("hello")
+})
 
 app.post('/rooms', (req, res) => {
   const { roomID, username } = req.body;

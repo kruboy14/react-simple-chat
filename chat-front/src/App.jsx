@@ -22,7 +22,7 @@ function App() {
       payload: obj,
     });
     socket.emit('ROOM:JOIN', obj);
-    const { data } = await axios.get(`/rooms/${obj.roomID}`);
+    const { data } = await axios.get(`https://react-simple-chat-back-heroku.herokuapp.com/rooms/${obj.roomID}`);
     dispatch({ type: SET_DATA, payload: data });
   };
 

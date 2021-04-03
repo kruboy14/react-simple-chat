@@ -15,7 +15,7 @@ function JoinBlock({ onLogin }) {
       username,
     };
     setLoading(true);
-    await axios.post('/rooms', obj);
+    await axios.post('https://react-simple-chat-back-heroku.herokuapp.com/rooms', obj);
     onLogin(obj);
   };
 
